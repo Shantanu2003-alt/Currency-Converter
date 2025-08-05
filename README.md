@@ -14,9 +14,9 @@ Caching for faster response and less API calls
 
 # Tech Stack
 Python 3.10+
-Streamlit
-Requests
-HTML/CSS for custom styling
+Streamlit — a Python framework for building modern, browser-based web apps quickly and easily.
+Requests — for calling the Exchange Rate API
+HTML/CSS — for light/dark mode theming inside Streamlit (using st.markdown)
 
 # How Currency Conversion works here
 Behind the scenes, the app:

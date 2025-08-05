@@ -47,16 +47,27 @@ set_theme(theme)
 # Title
 st.title("💱 Currency Converter")
 
-# Helper function to fetch exchange rates
+# Fetch all available currencies from the API
+@st.cache_data
+def get_available_currencies():
+    url = "https://api.exchangerate-api.com/v4/latest/USD"
+    response = requests.get(url)
+    data = response.json()
+    return list(data["rates"].keys())
+
+# Fetch exchange rates
 @st.cache_data
 def get_exchange_rates(base):
     url = f"https://api.exchangerate-api.com/v4/latest/{base}"
     response = requests.get(url)
     return response.json()
 
+# Dynamic currency list from API
+currency_options = get_available_currencies()
+
 # Input section
-base_currency = st.selectbox("From Currency", ["USD", "EUR", "GBP", "INR", "JPY", "CNY", "AUD", "CAD"])
-target_currency = st.selectbox("To Currency", ["USD", "EUR", "GBP", "INR", "JPY", "CNY", "AUD", "CAD"])
+base_currency = st.selectbox("From Currency", currency_options)
+target_currency = st.selectbox("To Currency", currency_options)
 amount = st.number_input("Amount", min_value=0.0, value=1.0, step=0.01)
 
 # Fetch and convert
